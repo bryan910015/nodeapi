@@ -594,12 +594,18 @@ module.exports = {
                 //有包含+-號才合併值寫入
 
                 let input1p = b.INPUT1;
-                if (b.INPUT1 == '-') {
-                    input1p = '(-)';
+
+                if (b.INPUT1.includes("-")) {
+                    input1p = b.INPUT1.replace(/\-/g, "(-)");
                 }
-                if (b.INPUT1 == '+') {
-                    input1p = '(+)';
+
+                if (b.INPUT1.includes("+")) {
+                    input1p = b.INPUT1.replace(/\+/g, "(+)");
                 }
+
+
+
+
 
                 if (b.SAY_INPUT1 != null) {
 
@@ -728,12 +734,16 @@ module.exports = {
                 // }
 
             }
-            await usrfunc.SaveExamDataBulk(rtObj) // 儲存到站存TABLE         
-            let saveRst = await usrfunc.SaveExamData();
+            console.log(rtObj);
+
+            //await usrfunc.SaveExamDataBulk(rtObj) // 儲存到站存TABLE       
+            //await new Promise(resolve => setTimeout(resolve, 1000));
+            //let saveRst = await usrfunc.SaveExamData();
+            //console.log(saveRst)
             //console.log(saveRst.output.ErrMsg + ' ' + saveRst.rowsAffected.toString());
             //寫入LOG擋
-            var writelog = await usrfunc.InsertExamLogData(sdate, edate, JSON.stringify(seldata), tp);
-            console.log(writelog);
+            // var writelog = await usrfunc.InsertExamLogData(sdate, edate, JSON.stringify(seldata), tp);
+            //console.log(writelog);
             res.json(rtObj); //回傳結果                     
 
         })()

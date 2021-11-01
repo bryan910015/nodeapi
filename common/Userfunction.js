@@ -377,9 +377,11 @@ module.exports = {
 
     SaveExamDataBulk: function (data) { //檢驗資料存黨(批次測試)     
 
+
+
         return pool.connect().then(pool => {
 
-            const table = new sql.Table('##datatmp')
+            const table = new sql.Table('#datatmp')
             table.create = true
             table.columns.add('BarCodeStr', sql.VarChar(10), { nullable: false })
             table.columns.add('ItemNo', sql.VarChar(10), { nullable: false })
