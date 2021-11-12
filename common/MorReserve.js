@@ -595,17 +595,13 @@ module.exports = {
 
                 let input1p = b.INPUT1;
 
-                if (b.INPUT1.includes("-")) {
-                    input1p = b.INPUT1.replace(/\-/g, "(-)");
+                if (b.INPUT1 == "+") {
+                    input1p = "(+)"
                 }
 
-                if (b.INPUT1.includes("+")) {
-                    input1p = b.INPUT1.replace(/\+/g, "(+)");
+                if (b.INPUT1 == "-") {
+                    input1p = "(-)"
                 }
-
-
-
-
 
                 if (b.SAY_INPUT1 != null) {
 
@@ -675,48 +671,6 @@ module.exports = {
 
                 var isCorrectDate = usrfunc.CheckCorrectDate(b.OP_DATE1, BarCodeStr, tp)
 
-                //寫入資料(如果存在於檢查項目才寫入)
-                //檢查檢驗BARCODE是否過期
-                /*
-               
-
-                if (isCorrectDate) {
-
-
-                    //if (Hasdata.cnt == 0) {
-                    //不存在資料就新增
-                    
-                    var insResult = await usrfunc.InsertExamData(data, tp);
-                    if (insResult == 'ok') {
-                        data.resp = insResult;
-                    } else {
-                        data.resp = insResult.message;
-                    }
-                    
-
-
-                    // data.op = '新增';
-                    // }
-
-                    // if (Hasdata.cnt > 0) {
-
-                    //存在資料就更新
-                    
-                     var upResult = await usrfunc.UpdateExamData(data, tp);
-                     if (upResult == 'ok') {
-                         data.resp = upResult;
-                     } else {
-                         data.resp = upResult.message;
-                     }
-                     
-
-                    //data.op = '更新';
-                    //}
-
-                }
-                */
-
-
                 if (hasItem.cnt == 0) {
                     data.op = data.op + ' ' + '多餘項';
                 }
@@ -734,16 +688,17 @@ module.exports = {
                 // }
 
             }
-            console.log(rtObj);
 
-            //await usrfunc.SaveExamDataBulk(rtObj) // 儲存到站存TABLE       
-            //await new Promise(resolve => setTimeout(resolve, 1000));
-            //let saveRst = await usrfunc.SaveExamData();
-            //console.log(saveRst)
+
+            await usrfunc.SaveExamDataBulk(rtObj) // 儲存到站存TABLE       
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            let saveRst = await usrfunc.SaveExamData();
+            console.log(saveRst)
             //console.log(saveRst.output.ErrMsg + ' ' + saveRst.rowsAffected.toString());
             //寫入LOG擋
-            // var writelog = await usrfunc.InsertExamLogData(sdate, edate, JSON.stringify(seldata), tp);
-            //console.log(writelog);
+            var writelog = await usrfunc.InsertExamLogData(sdate, edate, JSON.stringify(seldata), tp);
+            console.log(writelog);
+
             res.json(rtObj); //回傳結果                     
 
         })()

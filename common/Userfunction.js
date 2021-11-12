@@ -375,10 +375,7 @@ module.exports = {
         })
     },
 
-    SaveExamDataBulk: function (data) { //檢驗資料存黨(批次測試)     
-
-
-
+    SaveExamDataBulk: function (data) { //檢驗資料存黨(批次測試) 
         return pool.connect().then(pool => {
 
             const table = new sql.Table('#datatmp')
